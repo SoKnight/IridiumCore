@@ -1,5 +1,5 @@
 plugins {
-    java
+    `java-library`
     `maven-publish`
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
@@ -60,8 +60,28 @@ tasks {
     }
 }
 
+java {
+    withSourcesJar()
+}
+
+// Maven publishing to SoKnight's Nexus repository
 publishing {
-    publications.create<MavenPublication>("maven") {
-        from(components["java"])
+    publications.create<MavenPublication>("mavenJava") {
+        artifactId = "iridiumcore"
+
+        // Using compiled JARs instead of new publication creating
+        artifact(tasks["shadowJar"])
+        artifact(tasks["sourcesJar"])
+    }
+
+    repositories {
+        maven {
+            name = "nexus"
+            url = uri("https://repo.soknight.me/repository/releases/")
+            credentials {
+                username = project.property("nexusUsername").toString()
+                password = project.property("nexusPassword").toString()
+            }
+        }
     }
 }
