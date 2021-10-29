@@ -15,6 +15,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven("https://nexus.iridiumdevelopment.net/repository/maven-releases/")
         maven("https://repo.codemc.org/repository/maven-public/")
         maven("https://repo.rosewooddev.io/repository/public/")
         maven("https://papermc.io/repo/repository/maven-public/")
@@ -61,10 +62,6 @@ tasks {
     }
 }
 
-java {
-    withSourcesJar()
-}
-
 // Maven publishing to SoKnight's Nexus repository
 publishing {
     publications.create<MavenPublication>("mavenJava") {
@@ -72,7 +69,6 @@ publishing {
 
         // Using compiled JARs instead of new publication creating
         artifact(tasks["shadowJar"])
-        artifact(tasks["sourcesJar"])
     }
 
     repositories {
