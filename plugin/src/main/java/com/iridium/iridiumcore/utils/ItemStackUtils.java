@@ -6,7 +6,6 @@ import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -60,8 +59,13 @@ public class ItemStackUtils {
         if (item.material == XMaterial.PLAYER_HEAD && item.headData != null) {
             itemStack = setHeadData(item.headData, itemStack);
         } else if (item.material == XMaterial.PLAYER_HEAD && item.headOwner != null) {
-            UUID uuid = SkinUtils.getUUID(StringUtils.processMultiplePlaceholders(item.headOwner, placeholders));
-            itemStack = setHeadData(SkinUtils.getHeadData(uuid), itemStack);
+            String playerName = StringUtils.processMultiplePlaceholders(item.headOwner, placeholders);
+            if (Bukkit.getPluginManager().isPluginEnabled("AdvancedSkins")) {
+                itemStack = AdvancedSkinsUtils.setHeadData(itemStack, playerName);
+            } else {
+                UUID uuid = SkinUtils.getUUID(playerName);
+                itemStack = setHeadData(SkinUtils.getHeadData(uuid), itemStack);
+            }
         }
 
         return itemStack;
