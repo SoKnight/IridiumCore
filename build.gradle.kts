@@ -15,11 +15,18 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven {
+            credentials {
+                username = project.property("nexusUsername").toString()
+                password = project.property("nexusPassword").toString()
+            }
+            url = uri("https://repo.soknight.me/repository/releases/")
+        }
         maven("https://nexus.iridiumdevelopment.net/repository/maven-releases/")
         maven("https://repo.codemc.org/repository/maven-public/")
         maven("https://repo.rosewooddev.io/repository/public/")
         maven("https://papermc.io/repo/repository/maven-public/")
-        maven("https://nexus.iridiumdevelopment.net/repository/maven-releases/")
+        maven("https://repo.dmulloy2.net/repository/public/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     }
 
@@ -29,6 +36,8 @@ allprojects {
         implementation("com.github.cryptomorin:XSeries:8.7.0")
 
         // Other dependencies that are not required or already available at runtime
+        compileOnly("ru.soknight.advancedskins:api:2.0.0")
+        compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
         compileOnly("org.projectlombok:lombok:1.18.22")
 
         // Enable lombok annotation processing
