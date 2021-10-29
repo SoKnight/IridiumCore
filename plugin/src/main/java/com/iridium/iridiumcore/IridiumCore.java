@@ -15,7 +15,6 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
-import java.util.logging.Filter;
 
 /**
  * The main class of this plugin which handles initialization
@@ -98,11 +97,8 @@ public class IridiumCore extends JavaPlugin {
         saveTask.cancel();
         saveData();
         Bukkit.getOnlinePlayers().forEach(HumanEntity::closeInventory);
-        getLogger().info("-------------------------------");
-        getLogger().info("");
-        getLogger().info(getDescription().getName() + " Disabled!");
-        getLogger().info("");
-        getLogger().info("-------------------------------");
+        getLogger().info(getDescription().getName() + " disabled!");
+        getLogger().info("Forked by StarMC developer team.");
     }
 
     /**
