@@ -4,11 +4,14 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
 /**
@@ -185,8 +188,10 @@ public class Persist {
             }
         }
         try {
-            return clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            Constructor<T> emptyConstructor = clazz.getConstructor();
+            if(emptyConstructor != null)
+                return emptyConstructor.newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;
@@ -218,7 +223,7 @@ public class Persist {
      */
     public enum PersistType {
 
-        YAML(".yml", new YAMLFactory()),
+        YAML(".yml", new YAMLFactory().disable(YAMLGenerator.Feature.SPLIT_LINES)),
         JSON(".json", new JsonFactory());
 
         private final String extension;
