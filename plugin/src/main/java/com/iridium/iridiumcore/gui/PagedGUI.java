@@ -33,6 +33,7 @@ public abstract class PagedGUI<T> implements GUI {
                 .skip((long) (page - 1) * elementsPerPage)
                 .limit(elementsPerPage)
                 .collect(Collectors.toList());
+
         AtomicInteger slot = new AtomicInteger(0);
         for (T t : objects) {
             inventory.setItem(slot.getAndIncrement(), getItemStack(t));

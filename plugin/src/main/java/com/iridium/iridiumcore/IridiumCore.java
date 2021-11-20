@@ -24,6 +24,12 @@ import java.io.File;
 @NoArgsConstructor
 public class IridiumCore extends JavaPlugin {
 
+    static {
+        // determining Minecraft version and show debug messages on plugin load
+        // instead of display that on first usage by child plugin
+        de.tr7zw.changeme.nbtapi.utils.MinecraftVersion.getVersion();
+    }
+
     private Persist persist;
     private NMS nms;
     private MultiVersion multiVersion;
