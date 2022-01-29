@@ -1,8 +1,10 @@
 package com.iridium.iridiumcore;
 
 import com.iridium.iridiumcore.multiversion.*;
+import com.iridium.iridiumcore.multiversion.MultiVersion_V1_18_R1;
 import com.iridium.iridiumcore.nms.*;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -14,6 +16,7 @@ public enum MinecraftVersion {
      * However, this would break the plugins on some machines running the HotSpot VM.
      * Just leave this as it is and add new versions down below in the same way.
      */
+    DEFAULT(() -> new NMSDefault(), MultiversionDefault::new),
     V1_8_R2(() -> new NMS_V1_8_R2(), MultiVersion_V1_8_R2::new),
     V1_8_R3(() -> new NMS_V1_8_R3(), MultiVersion_V1_8_R3::new),
     V1_9_R1(() -> new NMS_V1_9_R1(), MultiVersion_V1_9_R1::new),
@@ -28,7 +31,8 @@ public enum MinecraftVersion {
     V1_16_R1(() -> new NMS_V1_16_R1(), MultiVersion_V1_16_R1::new),
     V1_16_R2(() -> new NMS_V1_16_R2(), MultiVersion_V1_16_R2::new),
     V1_16_R3(() -> new NMS_V1_16_R3(), MultiVersion_V1_16_R3::new),
-    V1_17_R1(() -> new NMS_V1_17_R1(), MultiVersion_V1_17_R1::new);
+    V1_17_R1(() -> new NMS_V1_17_R1(), MultiVersion_V1_17_R1::new),
+    V1_18_R1(() -> new NMS_V1_18_R1(), MultiVersion_V1_18_R1::new);
 
     private final Supplier<NMS> nmsSupplier;
     private final JavaPluginSupplier<MultiVersion> multiVersionSupplier;
@@ -46,6 +50,7 @@ public enum MinecraftVersion {
         return multiVersionSupplier.get(javaPlugin);
     }
 
+    @NotNull
     public static MinecraftVersion byName(String version) {
         for (MinecraftVersion minecraftVersion : values()) {
             if (minecraftVersion.name().equalsIgnoreCase(version)) {
@@ -53,7 +58,7 @@ public enum MinecraftVersion {
             }
         }
 
-        return null;
+        return DEFAULT;
     }
 
 }

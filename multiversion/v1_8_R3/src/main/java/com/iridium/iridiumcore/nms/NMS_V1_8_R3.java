@@ -19,31 +19,25 @@ import java.util.List;
 public class NMS_V1_8_R3 implements NMS {
 
     /**
-     * Sets blocks faster than with Spigots implementation.
+     * Deletes a block faster than with Spigots implementation.
      * See https://www.spigotmc.org/threads/methods-for-changing-massive-amount-of-blocks-up-to-14m-blocks-s.395868/
      * for more information.
      *
-     * @param world        The world where the block should be placed
-     * @param x            The x position of the block
-     * @param y            The y position of the block
-     * @param z            The z position of the block
-     * @param blockId      The ID of this block, used for backwards-compatibility with 1.8 - 1.12
-     * @param data         The data of this block
-     * @param applyPhysics Whether or not to apply physics
+     * @param location The location of the block which should be deleted
      */
     @Override
-    public void setBlockFast(org.bukkit.World world, int x, int y, int z, int blockId, byte data, boolean applyPhysics) {
-        World nmsWorld = ((CraftWorld) world).getHandle();
-        Chunk nmsChunk = nmsWorld.getChunkAt(x >> 4, z >> 4);
-        IBlockData ibd = Block.getByCombinedId(blockId + (data << 12));
+    public void deleteBlockFast(Location location) {
+        World nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
+        Chunk nmsChunk = nmsWorld.getChunkAt(location.getBlockX() >> 4, location.getBlockZ() >> 4);
+        IBlockData ibd = Block.getByCombinedId(0);
 
-        ChunkSection chunkSection = nmsChunk.getSections()[y >> 4];
+        ChunkSection chunkSection = nmsChunk.getSections()[location.getBlockY() >> 4];
         if (chunkSection == null) {
-            chunkSection = new ChunkSection(y >> 4 << 4, true);
-            nmsChunk.getSections()[y >> 4] = chunkSection;
+            chunkSection = new ChunkSection(location.getBlockY() >> 4 << 4, true);
+            nmsChunk.getSections()[location.getBlockY() >> 4] = chunkSection;
         }
 
-        chunkSection.setType(x & 15, y & 15, z & 15, ibd);
+        chunkSection.setType(location.getBlockX() & 15, location.getBlockY() & 15, location.getBlockZ() & 15, ibd);
     }
 
     /**

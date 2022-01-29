@@ -2,6 +2,8 @@ rootProject.name = "IridiumCore"
 include("plugin")
 include("multiversion")
 include("multiversion:common")
+include("multiversion:default")
+include("multiversion:v1_18_R1")
 include("multiversion:v1_17_R1")
 include("multiversion:v1_16_R3")
 include("multiversion:v1_16_R2")

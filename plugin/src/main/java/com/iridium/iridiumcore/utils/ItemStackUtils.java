@@ -1,6 +1,7 @@
 package com.iridium.iridiumcore.utils;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.iridium.iridiumcore.IridiumCore;
 import com.iridium.iridiumcore.Item;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -24,7 +25,7 @@ import java.util.UUID;
  */
 public class ItemStackUtils {
 
-    private static final boolean supports = XMaterial.supports(14);
+    private static final boolean supports = XMaterial.supports(16);
 
     /**
      * Creates a new ItemStack from the provided arguments.
@@ -40,10 +41,12 @@ public class ItemStackUtils {
         if (itemStack == null) return null;
         itemStack.setAmount(amount);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(StringUtils.color(lore));
-        itemMeta.setDisplayName(StringUtils.color(name));
-        itemStack.setItemMeta(itemMeta);
+        if (itemMeta != null) {
+            itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            itemMeta.setLore(StringUtils.color(lore));
+            itemMeta.setDisplayName(StringUtils.color(name));
+            itemStack.setItemMeta(itemMeta);
+        }
         return itemStack;
     }
 
@@ -126,6 +129,7 @@ public class ItemStackUtils {
      * @return A new ItemStack which is similar to the provided one but has the head data
      */
     private static ItemStack setHeadData(String headData, ItemStack itemStack) {
+        if (IridiumCore.getInstance().isTesting()) return itemStack;
         if (headData == null) return itemStack;
 
         NBTItem nbtItem = new NBTItem(itemStack);

@@ -1,6 +1,6 @@
 dependencies {
     // Dependencies that we want to shade in
-    implementation("de.tr7zw:item-nbt-api:2.8.0")
+    implementation("de.tr7zw:item-nbt-api:2.9.0-SNAPSHOT")
     implementation("com.iridium:IridiumColorAPI:1.0.6")
     implementation("org.jetbrains:annotations:22.0.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
@@ -12,7 +12,7 @@ dependencies {
     implementation("io.papermc:paperlib:1.0.6")
 
     // Other dependencies that are not required or already available at runtime
-    compileOnly("org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT")
 
     // Include all the nms sub-modules
     val multiVersionProjects = project(":multiversion").dependencyProject.subprojects

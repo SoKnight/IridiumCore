@@ -36,6 +36,8 @@ public class IridiumCore extends JavaPlugin {
     private boolean isTesting = false;
     private BukkitTask saveTask;
 
+    private static IridiumCore instance;
+
     /**
      * Constructor used for UnitTests
      */
@@ -66,24 +68,23 @@ public class IridiumCore extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        if (isTesting) {
-            registerListeners();
-            return;
-        }
+        instance = this;
         setupMultiVersion();
 
-        if (!PaperLib.isSpigot()) {
+        if (!PaperLib.isSpigot() && !isTesting) {
             // isSpigot returns true if the server is using spigot or a fork
             getLogger().warning("CraftBukkit isn't supported, please use spigot or one of its forks");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
-        // Save data regularly
-        saveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, this::saveData, 0, 20 * 60 * 5);
-
         // Register plugin listeners
         registerListeners();
+
+        if (isTesting) return;
+
+        // Save data regularly
+        saveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, this::saveData, 0, 20 * 60 * 5);
 
         // Automatically update all inventories
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getServer().getOnlinePlayers().forEach(player -> {
@@ -100,7 +101,7 @@ public class IridiumCore extends JavaPlugin {
     @Override
     public void onDisable() {
         if (isTesting) return;
-        saveTask.cancel();
+        if (saveTask != null) saveTask.cancel();
         saveData();
         Bukkit.getOnlinePlayers().forEach(HumanEntity::closeInventory);
         getLogger().info(getDescription().getName() + " disabled!");
@@ -126,16 +127,12 @@ public class IridiumCore extends JavaPlugin {
         try {
             String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
             MinecraftVersion minecraftVersion = MinecraftVersion.byName(version);
-            if (minecraftVersion == null) {
-                getLogger().warning("Un-Supported Minecraft Version: " + version);
-                Bukkit.getPluginManager().disablePlugin(this);
-                return;
-            }
 
             this.nms = minecraftVersion.getNms();
             this.multiVersion = minecraftVersion.getMultiVersion(this);
         } catch (Exception exception) {
-            getLogger().warning("Un-Supported Minecraft Version");
+            this.nms = MinecraftVersion.DEFAULT.getNms();
+            this.multiVersion = MinecraftVersion.DEFAULT.getMultiVersion(this);
         }
     }
 
@@ -154,6 +151,10 @@ public class IridiumCore extends JavaPlugin {
      * @see Persist
      */
     public void saveConfigs() {
+    }
+
+    public static IridiumCore getInstance() {
+        return instance;
     }
 
 }

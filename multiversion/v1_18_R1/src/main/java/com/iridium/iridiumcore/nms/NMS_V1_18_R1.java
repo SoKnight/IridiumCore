@@ -1,12 +1,14 @@
 package com.iridium.iridiumcore.nms;
 
 import com.iridium.iridiumcore.Color;
-import net.minecraft.server.v1_11_R1.*;
+import net.minecraft.network.protocol.game.ClientboundInitializeBorderPacket;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.border.WorldBorder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_11_R1.CraftChunk;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -14,9 +16,9 @@ import java.util.List;
 /**
  * Interface for working with the net.minecraft.server package.
  * Version-specific, so it has to be implemented for every version we support.
- * This is the implementation for V1_11_R1.
+ * This is the implementation for v1_17_R1.
  */
-public class NMS_V1_11_R1 implements NMS {
+public class NMS_V1_18_R1 implements NMS {
 
     /**
      * Deletes a block faster than with Spigots implementation.
@@ -27,17 +29,7 @@ public class NMS_V1_11_R1 implements NMS {
      */
     @Override
     public void deleteBlockFast(Location location) {
-        World nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
-        Chunk nmsChunk = nmsWorld.getChunkAt(location.getBlockX() >> 4, location.getBlockZ() >> 4);
-        IBlockData ibd = Block.getByCombinedId(0);
-
-        ChunkSection chunkSection = nmsChunk.getSections()[location.getBlockY() >> 4];
-        if (chunkSection == null) {
-            chunkSection = new ChunkSection(location.getBlockY() >> 4 << 4, true);
-            nmsChunk.getSections()[location.getBlockY() >> 4] = chunkSection;
-        }
-
-        chunkSection.setType(location.getBlockX() & 15, location.getBlockY() & 15, location.getBlockZ() & 15, ibd);
+        location.getBlock().setType(Material.AIR, false);
     }
 
     /**
@@ -49,10 +41,7 @@ public class NMS_V1_11_R1 implements NMS {
      */
     @Override
     public void sendChunk(List<Player> players, org.bukkit.Chunk chunk) {
-        PacketPlayOutMapChunk packetPlayOutMapChunk = new PacketPlayOutMapChunk(((CraftChunk) chunk).getHandle(), 65535);
-        players.forEach(player ->
-                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packetPlayOutMapChunk)
-        );
+        chunk.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
     }
 
     /**
@@ -68,44 +57,44 @@ public class NMS_V1_11_R1 implements NMS {
     public void sendWorldBorder(Player player, Color color, double size, Location centerLocation) {
         WorldBorder worldBorder = new WorldBorder();
         worldBorder.world = ((CraftWorld) centerLocation.getWorld()).getHandle();
-        worldBorder.setCenter(centerLocation.getBlockX() + 0.5, centerLocation.getBlockZ() + 0.5);
+        worldBorder.c(centerLocation.getBlockX() + 0.5, centerLocation.getBlockZ() + 0.5);
 
         if (color == Color.OFF) {
-            worldBorder.setSize(Integer.MAX_VALUE);
+            worldBorder.a(Integer.MAX_VALUE);
         } else {
-            worldBorder.setSize(size);
+            worldBorder.a(size);
         }
 
-        worldBorder.setWarningDistance(0);
-        worldBorder.setWarningTime(0);
+        worldBorder.b(0);
+        worldBorder.c(0);
 
         if (color == Color.RED) {
-            worldBorder.transitionSizeBetween(size, size - 1.0D, 20000000L);
+            worldBorder.a(size, size - 1.0D, 20000000L);
         } else if (color == Color.GREEN) {
-            worldBorder.transitionSizeBetween(size - 0.1D, size, 20000000L);
+            worldBorder.a(size - 0.1D, size, 20000000L);
         }
 
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutWorldBorder(worldBorder, PacketPlayOutWorldBorder.EnumWorldBorderAction.INITIALIZE));
+        ((CraftPlayer) player).getHandle().b.a(new ClientboundInitializeBorderPacket(worldBorder));
     }
 
     /**
      * Sends a title with the provided properties to the Player.
      *
-     * @param player The Player which should see the title
-     * @param title The upper message of the title
-     * @param subtitle The lower message of the title
-     * @param fadeIn The amount of time this title should fade in in ticks
+     * @param player      The Player which should see the title
+     * @param title       The upper message of the title
+     * @param subtitle    The lower message of the title
+     * @param fadeIn      The amount of time this title should fade in in ticks
      * @param displayTime The amount of time this title should stay fully visible in ticks
-     * @param fadeOut The amount of time this title should fade out in ticks
+     * @param fadeOut     The amount of time this title should fade out in ticks
      */
     @Override
     public void sendTitle(Player player, String title, String subtitle, int fadeIn, int displayTime, int fadeOut) {
         player.sendTitle(
-            ChatColor.translateAlternateColorCodes('&', title),
-            ChatColor.translateAlternateColorCodes('&', subtitle),
-            fadeIn,
-            displayTime,
-            fadeOut
+                ChatColor.translateAlternateColorCodes('&', title),
+                ChatColor.translateAlternateColorCodes('&', subtitle),
+                fadeIn,
+                displayTime,
+                fadeOut
         );
     }
 
