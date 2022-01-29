@@ -36,7 +36,7 @@ allprojects {
         implementation("com.github.cryptomorin:XSeries:8.7.0")
 
         // Other dependencies that are not required or already available at runtime
-        compileOnly("ru.soknight.advancedskins:api:2.0.0")
+        compileOnly("me.soknight.advancedskins:api:2.1.0")
         compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
         compileOnly("org.projectlombok:lombok:1.18.22")
 
