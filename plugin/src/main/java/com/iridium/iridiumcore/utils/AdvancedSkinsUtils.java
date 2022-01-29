@@ -9,10 +9,10 @@ import de.tr7zw.changeme.nbtapi.NBTListCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import ru.soknight.advancedskins.api.AdvancedSkinsApi;
-import ru.soknight.advancedskins.api.exception.FeatureUnavailableException;
-import ru.soknight.advancedskins.api.profile.PlayerProfile;
-import ru.soknight.advancedskins.api.profile.ProfileCache;
+import me.soknight.advancedskins.api.AdvancedSkinsApi;
+import me.soknight.advancedskins.api.exception.FeatureUnavailableException;
+import me.soknight.advancedskins.api.profile.PlayerProfile;
+import me.soknight.advancedskins.api.profile.ProfileCache;
 
 import java.util.Collection;
 import java.util.UUID;
