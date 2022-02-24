@@ -33,7 +33,7 @@ allprojects {
     dependencies {
         // Dependencies that we want to shade in
         implementation("org.jetbrains:annotations:22.0.0")
-        implementation("com.github.cryptomorin:XSeries:8.5.0.1")
+        implementation("com.github.cryptomorin:XSeries:8.6.1")
 
         // Other dependencies that are not required or already available at runtime
         compileOnly("me.soknight.advancedskins:api:2.1.0")
