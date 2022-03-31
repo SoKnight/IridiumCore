@@ -26,6 +26,7 @@ public class SkinUtils {
 
     private static final String steveSkin = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI3YWY5ZTQ0MTEyMTdjN2RlOWM2MGFjYmQzYzNmZDY1MTk3ODMzMzJhMWIzYmM1NmZiZmNlOTA3MjFlZjM1In19fQ==";
 
+    @SuppressWarnings("deprecation")
     public static UUID getUUID(String username) {
         if (!isValidUsername(username)) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(username);
@@ -60,7 +61,7 @@ public class SkinUtils {
             cache.put(uuid, steveSkin);
             CompletableFuture.runAsync(() -> {
                 try {
-                    String signature = getURLContent("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString());
+                    String signature = getURLContent("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid);
                     if (!signature.isEmpty()) {
                         JsonObject profileJsonObject = gson.fromJson(signature, JsonObject.class);
                         if (profileJsonObject.has("properties")) {

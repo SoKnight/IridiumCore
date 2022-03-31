@@ -90,7 +90,7 @@ public class NMS_V1_18_R2 implements NMS {
      * @param player      The Player which should see the title
      * @param title       The upper message of the title
      * @param subtitle    The lower message of the title
-     * @param fadeIn      The amount of time this title should fade in in ticks
+     * @param fadeIn      The amount of time this title should fade in ticks
      * @param displayTime The amount of time this title should stay fully visible in ticks
      * @param fadeOut     The amount of time this title should fade out in ticks
      */
@@ -105,6 +105,7 @@ public class NMS_V1_18_R2 implements NMS {
         );
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public double[] getTPS() {
         return MinecraftServer.getServer().recentTps;

@@ -14,7 +14,7 @@ dependencies {
     // Other dependencies that are not required or already available at runtime
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
 
-    // Include all the nms sub-modules
+    // Include all the nms submodules
     val multiVersionProjects = project(":multiversion").dependencyProject.subprojects
     multiVersionProjects.forEach { compileOnly(it) }
 }

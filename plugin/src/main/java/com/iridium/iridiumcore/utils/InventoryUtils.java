@@ -77,7 +77,7 @@ public class InventoryUtils {
     }
 
     /**
-     * Fills the provided Inventory with the filler material (black stained glass panes by default).
+     * Fills the provided Inventory with the filler material (black stained-glass panes by default).
      * Replaces existing items.
      *
      * @param inventory The inventory which should be filled
@@ -94,7 +94,7 @@ public class InventoryUtils {
     }
 
     /**
-     * Fills the provided Inventory with the filler material (black stained glass panes by default).
+     * Fills the provided Inventory with the filler material (black stained-glass panes by default).
      * Replaces existing items.
      *
      * @param inventory The inventory which should be filled

@@ -46,7 +46,7 @@ allprojects {
 }
 
 dependencies {
-    // Shade all the sub-projects into the jar
+    // Shade all the subprojects into the jar
     subprojects.forEach { implementation(it) }
 }
 

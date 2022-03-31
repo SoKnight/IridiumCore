@@ -14,7 +14,7 @@ public enum Color {
 
     /**
      * Returns the color with the provided name, null if there is none.
-     * Case insensitive.
+     * Case-insensitive.
      *
      * @param color The color which should be parsed
      * @return The color, null if there is none

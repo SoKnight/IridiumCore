@@ -10,12 +10,12 @@ import java.math.RoundingMode;
  */
 public class NumberFormatter {
 
-    public int numberAbbreviationDecimalPlaces = 2;
-    public String thousandAbbreviation = "K";
-    public String millionAbbreviation = "M";
-    public String billionAbbreviation = "B";
-    public String trillionAbbreviation = "T";
-    public boolean displayNumberAbbreviations = true;
+    public final int numberAbbreviationDecimalPlaces = 2;
+    public final String thousandAbbreviation = "K";
+    public final String millionAbbreviation = "M";
+    public final String billionAbbreviation = "B";
+    public final String trillionAbbreviation = "T";
+    public final boolean displayNumberAbbreviations = true;
     @JsonIgnore
     private final BigDecimal ONE_THOUSAND = new BigDecimal(1_000L);
     @JsonIgnore
@@ -26,7 +26,7 @@ public class NumberFormatter {
     private final BigDecimal ONE_TRILLION = new BigDecimal(1_000_000_000_000L);
 
     /**
-     * Formats a provided number as configured by the user.
+     * Formats a provided number than configured by the user.
      * Automatically rounds it and adds a suffix if possible.
      *
      * @param number The number which should be formatted
@@ -41,7 +41,7 @@ public class NumberFormatter {
     }
 
     /**
-     * Formats a provided number as configured by the user.
+     * Formats a provided number than configured by the user.
      * Automatically shortens it and adds a suffix.
      *
      * @param bigDecimal The BigDecimal that should be formatted

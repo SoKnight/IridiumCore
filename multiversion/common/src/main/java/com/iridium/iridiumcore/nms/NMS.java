@@ -3,7 +3,6 @@ package com.iridium.iridiumcore.nms;
 import com.iridium.iridiumcore.Color;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public interface NMS {
    * @param player      The Player which should see the title
    * @param title       The upper message of the title
    * @param subtitle    The lower message of the title
-   * @param fadeIn      The amount of time this title should fade in in ticks
+   * @param fadeIn      The amount of time this title should fade in ticks
    * @param displayTime The amount of time this title should stay fully visible in ticks
    * @param fadeOut     The amount of time this title should fade out in ticks
    */

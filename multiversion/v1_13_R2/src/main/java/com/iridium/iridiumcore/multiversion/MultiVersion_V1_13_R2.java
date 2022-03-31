@@ -14,7 +14,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class MultiVersion_V1_13_R2 extends MultiVersion {
 
-    @SuppressWarnings("deprecation")
     public MultiVersion_V1_13_R2(JavaPlugin javaPlugin) {
         super(javaPlugin);
     }
@@ -43,6 +42,7 @@ public class MultiVersion_V1_13_R2 extends MultiVersion {
         return PaperLib.getChunkAtAsync(world, x, z, true);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void loadLegacy() {
         new CraftLegacy();

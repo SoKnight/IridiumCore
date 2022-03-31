@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public abstract class MultiVersion {
 
-    public JavaPlugin javaPlugin;
+    public final JavaPlugin javaPlugin;
 
     public MultiVersion(JavaPlugin javaPlugin) {
         this.javaPlugin = javaPlugin;

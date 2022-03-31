@@ -34,6 +34,7 @@ public class NMSDefault implements NMS {
      * @param players The player which should see the updated chunk
      * @param chunk   The chunk which should be updated
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void sendChunk(List<Player> players, org.bukkit.Chunk chunk) {
         chunk.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
@@ -58,7 +59,7 @@ public class NMSDefault implements NMS {
      * @param player      The Player which should see the title
      * @param title       The upper message of the title
      * @param subtitle    The lower message of the title
-     * @param fadeIn      The amount of time this title should fade in in ticks
+     * @param fadeIn      The amount of time this title should fade in ticks
      * @param displayTime The amount of time this title should stay fully visible in ticks
      * @param fadeOut     The amount of time this title should fade out in ticks
      */

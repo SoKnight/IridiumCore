@@ -78,9 +78,6 @@ public class IridiumCore extends JavaPlugin {
             return;
         }
 
-        // Register plugin listeners
-        registerListeners();
-
         if (isTesting) return;
 
         // Save data regularly

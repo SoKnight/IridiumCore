@@ -54,8 +54,8 @@ public abstract class PagedGUI<T> implements GUI {
         InventoryUtils.fillInventory(inventory, background);
 
         if (isPaged()) {
-            inventory.setItem(inventory.getSize() - 3, ItemStackUtils.makeItem(nextPage));
-            inventory.setItem(inventory.getSize() - 7, ItemStackUtils.makeItem(previousPage));
+            inventory.setItem(inventory.getSize() + nextPage.slot, ItemStackUtils.makeItem(nextPage));
+            inventory.setItem(inventory.getSize() + previousPage.slot, ItemStackUtils.makeItem(previousPage));
         }
 
         int elementsPerPage = inventory.getSize() - (isPaged() || previousInventory != null ? 9 : 0);
@@ -70,6 +70,7 @@ public abstract class PagedGUI<T> implements GUI {
             items.put(currentSlot, t);
             inventory.setItem(currentSlot, getItemStack(t));
         }
+
         if (previousInventory != null && backButton != null) {
             inventory.setItem(inventory.getSize() + backButton.slot, ItemStackUtils.makeItem(backButton));
         }
@@ -102,12 +103,12 @@ public abstract class PagedGUI<T> implements GUI {
     @Override
     public void onInventoryClick(InventoryClickEvent event) {
         if (isPaged()) {
-            if (event.getSlot() == getInventory().getSize() - 7) {
+            if (event.getSlot() == getInventory().getSize() + previousPage.slot) {
                 if (page > 1) {
                     page--;
                     event.getWhoClicked().openInventory(getInventory());
                 }
-            } else if (event.getSlot() == getInventory().getSize() - 3) {
+            } else if (event.getSlot() == getInventory().getSize() + nextPage.slot) {
                 if ((event.getInventory().getSize() - 9) * page < getPageObjects().size()) {
                     page++;
                     event.getWhoClicked().openInventory(getInventory());
